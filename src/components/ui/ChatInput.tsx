@@ -53,7 +53,7 @@ export function ChatInput({
   };
 
   return (
-    <div className="pb-8 sm:pb-16 lg:pb-8 px-4 sm:px-6 lg:px-8">
+    <div className="pb-4 sm:pb-6 lg:pb-4 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="relative">
           <div className="flex items-end bg-gray-50 border border-gray-200 rounded-2xl sm:rounded-3xl px-3 sm:px-4 py-2 sm:py-3 shadow-sm hover:shadow-md transition-shadow">

@@ -3,7 +3,6 @@ import { useChatMessages, useStreamingMessage } from "@/hooks/use-messages";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { ChatInput } from "@/components/ui/ChatInput";
 import { MessageContent } from "@/components/ui/MessageContent";
-import { cn } from "@/lib/utils";
 import type { Message } from "@/types/api";
 
 interface ChatConversationProps {
@@ -22,7 +21,10 @@ export function ChatConversation({
   const { isStreaming, streamingContent, error, startStream } =
     useStreamingMessage();
 
-  const messages = useMemo(() => messagesData?.messages || [], [messagesData?.messages]);
+  const messages = useMemo(
+    () => messagesData?.messages || [],
+    [messagesData?.messages]
+  );
 
   useEffect(() => {
     if (initialMessage && !isLoading && messages.length === 0 && !isStreaming) {
@@ -64,9 +66,9 @@ export function ChatConversation({
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full max-h-screen">
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto w-full min-h-0">
         {messages.length === 0 && !isStreaming ? (
           <div className="flex items-center justify-center h-full text-gray-500 dark:text-gray-400">
             <div className="text-center">
@@ -84,9 +86,9 @@ export function ChatConversation({
 
             {/* Streaming message */}
             {isStreaming && (
-              <div className="flex justify-start">
+              <div className="flex justify-start mb-4">
                 <div className="max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] bg-gray-100 dark:bg-gray-700 rounded-2xl px-4 sm:px-5 py-3 sm:py-4 overflow-hidden">
-                  <div className="text-sm sm:text-base leading-relaxed">
+                  <div className="text-sm sm:text-base leading-relaxed text-gray-900 dark:text-gray-100">
                     <MessageContent
                       content={streamingContent}
                       isUser={false}
@@ -111,14 +113,16 @@ export function ChatConversation({
       </div>
 
       {/* Input Area - Using Reusable ChatInput Component */}
-      <ChatInput
-        message={message}
-        setMessage={setMessage}
-        onSendMessage={handleSendMessage}
-        placeholder="Type your message..."
-        disabled={isStreaming}
-        isLoading={isStreaming}
-      />
+      <div className="flex-shrink-0">
+        <ChatInput
+          message={message}
+          setMessage={setMessage}
+          onSendMessage={handleSendMessage}
+          placeholder="What's in your mind..."
+          disabled={isStreaming}
+          isLoading={isStreaming}
+        />
+      </div>
     </div>
   );
 }
@@ -130,28 +134,31 @@ interface MessageBubbleProps {
 function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === "user";
 
-  return (
-    <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
-      <div
-        className={cn(
-          "max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] rounded-2xl px-4 sm:px-5 py-3 sm:py-4 overflow-hidden",
-          isUser
-            ? "bg-blue-600 text-white"
-            : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-        )}
-      >
-        {!isUser && (
-          <div className="text-xs sm:text-sm opacity-60 mb-1 text-gray-600 dark:text-gray-400">
-            AI Assistant
+  if (isUser) {
+    return (
+      <div className="flex justify-end mb-4">
+        <div className="max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] bg-blue-600 text-white rounded-2xl px-4 sm:px-5 py-3 sm:py-4 overflow-hidden">
+          <div className="text-sm sm:text-base leading-relaxed">
+            <MessageContent
+              content={message.content}
+              isUser={isUser}
+              className="text-white"
+            />
           </div>
-        )}
-        <div className="text-sm sm:text-base leading-relaxed">
+        </div>
+      </div>
+    );
+  }
+
+  // AI messages display with light gray bubble container (left-aligned)
+  return (
+    <div className="flex justify-start mb-4">
+      <div className="max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] bg-gray-100 dark:bg-gray-700 rounded-2xl px-4 sm:px-5 py-3 sm:py-4 overflow-hidden">
+        <div className="text-sm sm:text-base leading-relaxed text-gray-900 dark:text-gray-100">
           <MessageContent
             content={message.content}
             isUser={isUser}
-            className={
-              isUser ? "text-white" : "text-gray-900 dark:text-gray-100"
-            }
+            className="text-gray-900 dark:text-gray-100"
           />
         </div>
       </div>

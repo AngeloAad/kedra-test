@@ -63,8 +63,14 @@ export function useStreamingMessage() {
         const eventSource = streamingApi.createEventSource(chatId, message);
         eventSourceRef.current = eventSource;
 
+        eventSource.onopen = () => {
+          console.log("EventSource connection opened");
+        };
+
         eventSource.onmessage = (event: MessageEvent) => {
+          console.log("EventSource received message:", event.data);
           try {
+            // First try to parse as structured JSON
             const data: StreamMessage = JSON.parse(event.data);
 
             switch (data.type) {
@@ -110,18 +116,43 @@ export function useStreamingMessage() {
                 break;
               }
             }
-          } catch (parseError) {
-            console.error("Failed to parse streaming data:", parseError);
-            setError("Failed to parse response");
-            setIsStreaming(false);
-            eventSource.close();
+          } catch {
+            // If JSON parsing fails, treat as plain text streaming content
+            console.log("Treating as plain text content:", event.data);
+            setStreamingContent((prev) => prev + event.data);
           }
         };
 
-        eventSource.onerror = () => {
-          console.error("EventSource error");
+        eventSource.onerror = (error) => {
+          console.error("EventSource error:", error);
+          console.error("EventSource readyState:", eventSource.readyState);
+
+          // If we have streaming content when connection closes, save it
+          if (streamingContent.trim()) {
+            const assistantMessage: Message = {
+              id: `ai-${Date.now()}`,
+              chat_id: chatId,
+              content: streamingContent,
+              role: "assistant",
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            };
+
+            queryClient.setQueryData(
+              queryKeys.chatMessages(chatId),
+              (oldData: ChatMessagesResponse | undefined) => {
+                if (!oldData) return { messages: [assistantMessage] };
+                return {
+                  ...oldData,
+                  messages: [...oldData.messages, assistantMessage],
+                };
+              }
+            );
+          }
+
           setError("Connection error occurred");
           setIsStreaming(false);
+          setStreamingContent("");
           eventSource.close();
         };
       } catch (error) {

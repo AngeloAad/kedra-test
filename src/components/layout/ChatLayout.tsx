@@ -57,7 +57,7 @@ export function ChatLayout() {
         </div>
 
         {/* Chat Content */}
-        <div className="flex-1 flex flex-col min-w-0 relative z-30">
+        <div className="flex-1 flex flex-col min-w-0 relative z-30 h-full overflow-hidden">
           <ErrorBoundary
             fallback={
               <div className="p-4 text-red-600">Failed to load chat</div>

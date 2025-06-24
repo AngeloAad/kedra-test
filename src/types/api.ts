@@ -53,6 +53,15 @@ export interface UserChatsResponse {
 // This will be the raw response from the API
 export type UserChatsApiResponse = ApiChatItem[];
 
+// Raw API message response structure
+export interface ApiMessageItem {
+  user_message: string;
+  bot_response: string;
+  timestamp: string;
+}
+
+export type ChatMessagesApiResponse = ApiMessageItem[];
+
 export interface ChatMessagesResponse {
   messages: Message[];
 }

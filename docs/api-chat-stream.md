@@ -1,6 +1,6 @@
 # FastAPI Chat Documentation
 
-## GET /api/chat/stream  ==> Stream AI chat responses
+## POST /api/chat/stream  ==> Stream AI chat responses
 ### Parameters
 No parameters
 Request body(required):
