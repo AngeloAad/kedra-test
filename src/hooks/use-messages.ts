@@ -22,6 +22,7 @@ export function useStreamingMessage() {
   const [streamingContent, setStreamingContent] = useState("");
   const [error, setError] = useState<string | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
+  const hasReceivedDataRef = useRef<boolean>(false);
   const queryClient = useQueryClient();
 
   const startStream = useCallback(
@@ -36,6 +37,7 @@ export function useStreamingMessage() {
       setIsStreaming(true);
       setStreamingContent("");
       setError(null);
+      hasReceivedDataRef.current = false;
 
       // Add user message to cache immediately
       const userMessage: Message = {
@@ -69,6 +71,8 @@ export function useStreamingMessage() {
 
         eventSource.onmessage = (event: MessageEvent) => {
           console.log("EventSource received message:", event.data);
+          hasReceivedDataRef.current = true; // Mark that we received data
+
           try {
             // First try to parse as structured JSON
             const data: StreamMessage = JSON.parse(event.data);
@@ -127,8 +131,11 @@ export function useStreamingMessage() {
           console.error("EventSource error:", error);
           console.error("EventSource readyState:", eventSource.readyState);
 
-          // If we have streaming content when connection closes, save it
-          if (streamingContent.trim()) {
+          // If we have streaming content when connection closes, save it and don't show error
+          if (streamingContent.trim() || hasReceivedDataRef.current) {
+            console.log(
+              "Connection closed but content received, saving message..."
+            );
             const assistantMessage: Message = {
               id: `ai-${Date.now()}`,
               chat_id: chatId,
@@ -148,11 +155,18 @@ export function useStreamingMessage() {
                 };
               }
             );
+
+            // Don't set error if we successfully received content
+            setIsStreaming(false);
+            setStreamingContent("");
+          } else {
+            // Only show error if we didn't receive any content at all
+            console.log("Connection error with no content received");
+            setError("Connection error occurred");
+            setIsStreaming(false);
+            setStreamingContent("");
           }
 
-          setError("Connection error occurred");
-          setIsStreaming(false);
-          setStreamingContent("");
           eventSource.close();
         };
       } catch (error) {
@@ -174,6 +188,7 @@ export function useStreamingMessage() {
     setIsStreaming(false);
     setStreamingContent("");
     setError(null);
+    hasReceivedDataRef.current = false;
   }, []);
 
   // Cleanup on unmount

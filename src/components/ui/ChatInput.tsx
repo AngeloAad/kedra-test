@@ -86,7 +86,7 @@ export function ChatInput({
               onClick={handleSend}
               disabled={!message.trim() || disabled}
               className="ml-2 sm:ml-3 w-7 h-7 sm:w-8 sm:h-8 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300
-              rounded-full flex items-center justify-center transition-colors disabled:cursor-not-allowed flex-shrink-0 self-end pb-1"
+              rounded-full flex items-center justify-center transition-colors flex-shrink-0 self-end pb-1"
             >
               {isLoading ? (
                 <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

@@ -1,9 +1,5 @@
 import { useParams, useNavigate } from "@tanstack/react-router";
-import {
-  PlusIcon,
-  Cog6ToothIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useUserChats, useRenameChat, useDeleteChat } from "@/hooks/use-chats";
 import { ChatListItem } from "@/components/sidebar/ChatListItem";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
@@ -87,12 +83,6 @@ export function ChatSidebar({ onCloseSidebar }: ChatSidebarProps = {}) {
       navigate({ to: "/" });
       return;
     }
-
-    // If we're on root page, this button should be disabled
-    // This shouldn't be called, but just in case
-    console.log(
-      "New chat button clicked on root page - this should be disabled"
-    );
   };
 
   return (
@@ -118,8 +108,8 @@ export function ChatSidebar({ onCloseSidebar }: ChatSidebarProps = {}) {
           disabled={isOnRootPage}
           className={`w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left rounded-full transition-colors font-medium text-sm sm:text-base ${
             isOnRootPage
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600 text-white"
+              ? "bg-gray-300 text-gray-500 "
+              : "bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
           }`}
         >
           <PlusIcon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
@@ -135,7 +125,7 @@ export function ChatSidebar({ onCloseSidebar }: ChatSidebarProps = {}) {
       </div>
 
       {/* Chat List */}
-      <div className="flex-1 overflow-y-auto px-4 sm:px-6">
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6 pt-2">
         {isLoading ? (
           <div className="flex items-center justify-center p-8">
             <LoadingSpinner size="md" />
@@ -211,26 +201,7 @@ export function ChatSidebar({ onCloseSidebar }: ChatSidebarProps = {}) {
         )}
       </div>
 
-      {/* Footer */}
-      <div className="p-4 sm:p-6 border-t border-gray-200">
-        {/* Settings */}
-        <button className="flex items-center gap-2 sm:gap-3 w-full p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors mb-3 sm:mb-4 text-sm sm:text-base">
-          <Cog6ToothIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span>Settings</span>
-        </button>
-
-        {/* User Profile */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gray-300 rounded-full flex items-center justify-center">
-            <span className="text-xs sm:text-sm font-medium text-gray-600">
-              AN
-            </span>
-          </div>
-          <span className="text-xs sm:text-sm font-medium text-gray-800">
-            Andrew Neilson
-          </span>
-        </div>
-      </div>
+      <div className="p-4"></div>
     </div>
   );
 }

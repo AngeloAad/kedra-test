@@ -6,11 +6,7 @@ import { API_CONFIG, chatApi } from "@/lib/api";
 import { queryKeys } from "@/lib/query-keys";
 
 // Types
-import {
-  UserChatsResponse,
-  CreateChatResponse,
-  RenameChatResponse,
-} from "@/types/api";
+import { UserChatsResponse, CreateChatResponse } from "@/types/api";
 
 export function useUserChats() {
   return useQuery({
@@ -91,20 +87,8 @@ export function useRenameChat() {
   return useMutation({
     mutationFn: ({ chatId, newName }: { chatId: string; newName: string }) =>
       chatApi.renameChat(chatId, newName),
-    onSuccess: (data: RenameChatResponse) => {
-      // Update the chat in the cache
-      queryClient.setQueryData(
-        queryKeys.userChats(),
-        (oldData: UserChatsResponse | undefined) => {
-          if (!oldData) return { chats: [data.chat] };
-          return {
-            ...oldData,
-            chats: oldData.chats.map((chat) =>
-              chat.id === data.chat.id ? data.chat : chat
-            ),
-          };
-        }
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.userChats() })
     },
     onError: (error) => {
       console.error("Failed to rename chat:", error);
