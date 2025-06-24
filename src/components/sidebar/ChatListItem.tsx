@@ -90,13 +90,12 @@ export function ChatListItem({
         )}
       </Link>
 
-      {/* Three dots menu button - only show on hover */}
       <button
         onClick={(e) => {
           e.preventDefault();
           setShowMenu(!showMenu);
         }}
-        className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-gray-200 transition-opacity flex-shrink-0"
+        className="p-1 rounded hover:bg-gray-200 transition-colors flex-shrink-0 text-gray-500 hover:text-gray-700"
       >
         <EllipsisHorizontalIcon className="w-4 h-4" />
       </button>
