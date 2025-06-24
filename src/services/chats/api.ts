@@ -32,7 +32,7 @@ export const chatsApi = {
         id: apiChat.chat_id,
         name: apiChat.chat_name,
         created_at: apiChat.timestamp_created,
-        updated_at: apiChat.timestamp_created, // API doesn't provide updated_at, so use created
+        updated_at: apiChat.timestamp_created,
         user_id: API_CONFIG.userId,
         tenant_id: API_CONFIG.tenantId,
       }))
@@ -44,7 +44,6 @@ export const chatsApi = {
     return { chats: transformedChats };
   },
 
-  // Create new chat
   createChat: async (name: string): Promise<CreateChatResponse> => {
     const payload: CreateChatRequest = {
       name,
@@ -63,7 +62,6 @@ export const chatsApi = {
     return { chat_id: chatId };
   },
 
-  // Delete chat
   deleteChat: async (chatId: string): Promise<DeleteChatResponse> => {
     const queryParams = new URLSearchParams({
       chat_id: chatId,
@@ -76,7 +74,6 @@ export const chatsApi = {
     });
   },
 
-  // Rename chat
   renameChat: async (
     chatId: string,
     newName: string

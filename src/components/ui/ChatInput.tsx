@@ -57,14 +57,12 @@ export function ChatInput({
       <div className="max-w-3xl mx-auto">
         <div className="relative">
           <div className="flex items-end bg-gray-50 border border-gray-200 rounded-2xl sm:rounded-3xl px-3 sm:px-4 py-2 sm:py-3 shadow-sm hover:shadow-md transition-shadow">
-            {/* Brain Icon */}
             <div className="mr-2 sm:mr-3 flex-shrink-0 self-end pb-1">
               <div className="w-5 h-5 sm:w-6 sm:h-6 bg-pink-100 rounded-full flex items-center justify-center">
                 <span className="text-base sm:text-lg">🧠</span>
               </div>
             </div>
 
-            {/* Input */}
             <textarea
               ref={textareaRef}
               value={message}
@@ -81,7 +79,6 @@ export function ChatInput({
               }}
             />
 
-            {/* Send Button */}
             <button
               onClick={handleSend}
               disabled={!message.trim() || disabled}

@@ -28,7 +28,6 @@ function Index() {
 
       const result = await createChat(chatName);
 
-      // Navigate to the new chat with the initial message
       navigate({
         to: "/$chatId",
         params: { chatId: result.chat_id },

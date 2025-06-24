@@ -15,7 +15,6 @@ export function MessageContent({
   className,
 }: MessageContentProps) {
   if (isUser) {
-    // For user messages, just display as plain text with line breaks
     return (
       <div
         className={cn(
@@ -28,7 +27,7 @@ export function MessageContent({
     );
   }
 
-  // For AI messages, use React Markdown with full formatting
+  // AI messages, using React Markdown with full formatting
   return (
     <div
       className={cn(
@@ -40,7 +39,6 @@ export function MessageContent({
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeHighlight]}
         components={{
-          // Customize heading styles
           h1: ({ children }) => (
             <h1 className="text-lg font-bold mb-3 text-gray-900 dark:text-gray-100">
               {children}
@@ -57,14 +55,12 @@ export function MessageContent({
             </h3>
           ),
 
-          // Customize paragraph styles
           p: ({ children }) => (
             <p className="mb-2 text-gray-900 dark:text-gray-100 leading-relaxed">
               {children}
             </p>
           ),
 
-          // Customize list styles
           ul: ({ children }) => (
             <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>
           ),
@@ -75,7 +71,6 @@ export function MessageContent({
             <li className="text-gray-900 dark:text-gray-100">{children}</li>
           ),
 
-          // Customize code styles
           code: (props) => {
             const { children, className: codeClassName } = props;
             // @ts-expect-error - react-markdown provides inline prop
@@ -104,21 +99,18 @@ export function MessageContent({
             );
           },
 
-          // Customize pre (code block container) styles
           pre: ({ children }) => (
             <pre className="mb-3 overflow-x-auto rounded-lg bg-gray-100 dark:bg-gray-800">
               {children}
             </pre>
           ),
 
-          // Customize blockquote styles
           blockquote: ({ children }) => (
             <blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-4 my-2 italic text-gray-700 dark:text-gray-300">
               {children}
             </blockquote>
           ),
 
-          // Customize table styles
           table: ({ children }) => (
             <div className="overflow-x-auto mb-3">
               <table className="min-w-full border-collapse border border-gray-300 dark:border-gray-600">
@@ -137,7 +129,6 @@ export function MessageContent({
             </td>
           ),
 
-          // Customize link styles
           a: ({ children, href }) => (
             <a
               href={href}
@@ -149,21 +140,18 @@ export function MessageContent({
             </a>
           ),
 
-          // Customize strong/bold styles
           strong: ({ children }) => (
             <strong className="font-semibold text-gray-900 dark:text-gray-100">
               {children}
             </strong>
           ),
 
-          // Customize emphasis/italic styles
           em: ({ children }) => (
             <em className="italic text-gray-900 dark:text-gray-100">
               {children}
             </em>
           ),
 
-          // Customize horizontal rule styles
           hr: () => (
             <hr className="my-4 border-gray-300 dark:border-gray-600" />
           ),

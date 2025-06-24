@@ -2,12 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChatConversation } from "@/components/chat/ChatConversation";
 import { z } from "zod";
 
-// Validate route parameters
 const chatParamsSchema = z.object({
   chatId: z.string().min(1),
 });
 
-// Validate search parameters
 const chatSearchSchema = z.object({
   initialMessage: z.string().optional(),
 });

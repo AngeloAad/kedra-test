@@ -150,7 +150,7 @@ function MessageBubble({ message }: MessageBubbleProps) {
     );
   }
 
-  // AI messages display with light gray bubble container (left-aligned)
+  // AI messages
   return (
     <div className="flex justify-start mb-4">
       <div className="max-w-[85%] sm:max-w-[80%] lg:max-w-[75%] bg-gray-100 dark:bg-gray-700 rounded-2xl px-4 sm:px-5 py-3 sm:py-4 overflow-hidden">

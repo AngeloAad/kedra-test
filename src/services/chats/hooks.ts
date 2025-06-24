@@ -15,10 +15,9 @@ function updateChatsCache(
   queryClient: ReturnType<typeof useQueryClient>,
   updater: (oldData: UserChatsResponse | undefined) => UserChatsResponse
 ) {
-  // Update cache for the most common pagination scenario (default: pageSize=100, pageNumber=1)
+  // immediate cache update (optimistic)
   queryClient.setQueryData([...chatsKeys.all, 100, 1], updater);
 
-  // Also invalidate all chat queries to ensure consistency
   queryClient.invalidateQueries({ queryKey: chatsKeys.all });
 }
 
