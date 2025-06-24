@@ -120,7 +120,7 @@ export function ChatSidebar({ onCloseSidebar }: ChatSidebarProps = {}) {
       {/* Conversations Header */}
       <div className="px-4 sm:px-6 py-2">
         <h2 className="text-xs sm:text-sm font-medium text-gray-700">
-          Your conversations
+          Your conversations ({filteredChats.length} chats)
         </h2>
       </div>
 

@@ -10,10 +10,20 @@ import type {
 } from "./types";
 
 export const chatsApi = {
-  // Get all user chats
-  getUserChats: async (): Promise<UserChatsResponse> => {
+  // Get all user chats with pagination support
+  getUserChats: async (
+    pageSize: number = 100,
+    pageNumber: number = 1
+  ): Promise<UserChatsResponse> => {
+    const queryParams = new URLSearchParams({
+      user_id: API_CONFIG.userId,
+      tenant_name: API_CONFIG.tenantId,
+      page_size: pageSize.toString(),
+      page_number: pageNumber.toString(),
+    });
+
     const rawResponse = await apiRequest<UserChatsApiResponse>(
-      `/chat/user_chats?tenant_name=${API_CONFIG.tenantId}&user_id=${API_CONFIG.userId}`
+      `/chat/user_chats?${queryParams}`
     );
 
     // Transform the raw API response to match our Chat interface

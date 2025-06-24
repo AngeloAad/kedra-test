@@ -1,4 +1,4 @@
-// Core Chat entity
+
 export interface Chat {
   id: string;
   name: string;
@@ -8,13 +8,12 @@ export interface Chat {
   tenant_id: string;
 }
 
-// API Request/Response Types
 export interface CreateChatRequest {
   name: string;
 }
 
 export interface CreateChatResponse {
-  chat_id: string; // API returns just the chat ID as a string
+  chat_id: string;
 }
 
 export interface DeleteChatRequest {
@@ -48,12 +47,15 @@ export interface ApiChatItem {
 
 export interface UserChatsResponse {
   chats: Chat[];
+  totalCount?: number;
+  pageSize?: number;
+  pageNumber?: number;
+  hasNextPage?: boolean;
 }
 
 // This will be the raw response from the API
 export type UserChatsApiResponse = ApiChatItem[];
 
-// UI State Types
 export interface ChatState {
   activeChat: Chat | null;
   isLoading: boolean;

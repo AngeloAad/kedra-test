@@ -1,24 +1,47 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import { chatsApi } from "./api";
 import { chatsKeys, chatsQueryOptions } from "./queryOptions";
 import { messagesKeys } from "../messages/queryOptions";
 import type { UserChatsResponse, CreateChatResponse } from "./types";
 import { API_CONFIG } from "@/lib/api-config";
 
-// Helper function to update chats cache
+// Helper function to update chats cache for all pagination combinations
 function updateChatsCache(
   queryClient: ReturnType<typeof useQueryClient>,
   updater: (oldData: UserChatsResponse | undefined) => UserChatsResponse
 ) {
-  queryClient.setQueryData(chatsKeys.all, updater);
+  // Update cache for the most common pagination scenario (default: pageSize=100, pageNumber=1)
+  queryClient.setQueryData([...chatsKeys.all, 100, 1], updater);
+
+  // Also invalidate all chat queries to ensure consistency
+  queryClient.invalidateQueries({ queryKey: chatsKeys.all });
 }
 
-// Get all user chats
-export function useUserChats() {
-  return useQuery(chatsQueryOptions.userChats());
+export function useUserChats(pageSize: number = 100, pageNumber: number = 1) {
+  return useQuery(chatsQueryOptions.userChats(pageSize, pageNumber));
 }
 
-// Create a new chat
+export function useInfiniteUserChats(pageSize: number = 50) {
+  return useInfiniteQuery({
+    queryKey: [...chatsKeys.all, "infinite", pageSize],
+    queryFn: ({ pageParam = 1 }) => chatsApi.getUserChats(pageSize, pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.chats.length < pageSize) {
+        return undefined;
+      }
+      return allPages.length + 1;
+    },
+    initialPageParam: 1,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 30, // 30 minutes
+  });
+}
+
 export function useCreateChat() {
   const queryClient = useQueryClient();
 
@@ -43,7 +66,6 @@ export function useCreateChat() {
   });
 }
 
-// Delete a chat
 export function useDeleteChat() {
   const queryClient = useQueryClient();
 
@@ -65,7 +87,6 @@ export function useDeleteChat() {
   });
 }
 
-// Rename a chat
 export function useRenameChat() {
   const queryClient = useQueryClient();
 
@@ -73,7 +94,6 @@ export function useRenameChat() {
     mutationFn: ({ chatId, newName }: { chatId: string; newName: string }) =>
       chatsApi.renameChat(chatId, newName),
     onSuccess: () => {
-      // Invalidate to refetch fresh data since API doesn't return updated chat
       queryClient.invalidateQueries({ queryKey: chatsKeys.all });
     },
     onError: (error) => console.error("Failed to rename chat:", error),
