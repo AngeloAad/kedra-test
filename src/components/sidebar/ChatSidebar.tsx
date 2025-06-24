@@ -17,8 +17,8 @@ export function ChatSidebar({ onCloseSidebar }: ChatSidebarProps = {}) {
   const isOnRootPage = !chatId;
 
   const { data: chatsData, isLoading, error } = useUserChats();
-  const renameChatMutation = useRenameChat();
-  const deleteChatMutation = useDeleteChat();
+  const { mutate: renameChat } = useRenameChat();
+  const { mutate: deleteChat } = useDeleteChat();
 
   const filteredChats = chatsData?.chats || [];
 
@@ -65,13 +65,13 @@ export function ChatSidebar({ onCloseSidebar }: ChatSidebarProps = {}) {
         chat={chat}
         isActive={chat.id === chatId}
         onRename={(chatId, newName) => {
-          renameChatMutation.mutate({ chatId, newName });
+          renameChat({ chatId, newName });
         }}
         onDelete={(deleteChatId) => {
           if (deleteChatId === chatId) {
             navigate({ to: "/" });
           }
-          deleteChatMutation.mutate(deleteChatId);
+          deleteChat(deleteChatId);
         }}
       />
     ));

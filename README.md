@@ -17,7 +17,7 @@ A modern, type-safe ChatGPT-like experience built with React, TypeScript, TanSta
 
 ### Tech Stack
 
-- **React 18** - UI library with concurrent features
+- **React 19** - UI library with concurrent features
 - **TypeScript** - Type safety and developer experience
 - **TanStack Router** - File-based routing with type safety
 - **TanStack Query** - Server state management with caching
@@ -122,10 +122,9 @@ const STREAM_USER_ID = "a51047e3-452e-49ee-a226-1659eaa50c3c"; // Streaming only
 
 ### Phase 3: Advanced Features (⏳ Planned)
 
-- [ ] Chat rename functionality
-- [ ] Chat deletion with confirmation
+- [x] Chat rename functionality
+- [x] Chat deletion with confirmation
 - [ ] Message search and filtering
-- [ ] Dark mode toggle
 - [ ] Responsive mobile optimizations
 - [ ] Keyboard shortcuts
 - [ ] Accessibility improvements
@@ -223,17 +222,17 @@ const STREAM_USER_ID = "a51047e3-452e-49ee-a226-1659eaa50c3c"; // Streaming only
 // Fetch user chats with caching
 const { data, isLoading, error } = useUserChats();
 
-// Create new chat with optimistic updates
-const createChat = useCreateChat();
-await createChat.mutateAsync("Chat Name");
+// Create new chat with optimistic updates - PROPER DESTRUCTURING
+const { mutateAsync: createChat, isPending } = useCreateChat();
+await createChat("Chat Name");
 
-// Delete chat with cache invalidation
-const deleteChat = useDeleteChat();
-await deleteChat.mutateAsync(chatId);
+// Delete chat with cache invalidation - PROPER DESTRUCTURING
+const { mutate: deleteChat } = useDeleteChat();
+deleteChat(chatId);
 
-// Rename chat with rollback on error
-const renameChat = useRenameChat();
-await renameChat.mutateAsync({ chatId, newName });
+// Rename chat with rollback on error - PROPER DESTRUCTURING
+const { mutate: renameChat } = useRenameChat();
+renameChat({ chatId, newName });
 ```
 
 ### Message Management
@@ -373,6 +372,25 @@ const { data } = useQuery({
 - Consistent naming conventions
 - Separate business logic into custom hooks
 
+### Hook Usage Best Practices
+
+```typescript
+// ✅ GOOD: Properly destructure mutation hooks
+const { mutate: createChat, isPending, isError, error } = useCreateChat();
+
+// ❌ BAD: Don't use the entire mutation object
+const createChatMutation = useCreateChat();
+const isLoading = createChatMutation.isPending; // Harder to track
+
+// ✅ GOOD: Destructure what you need
+const { mutateAsync: deleteChat, isPending: isDeleting } = useDeleteChat();
+
+// ✅ GOOD: Rename when you have multiple similar hooks
+const { mutate: renameChat, isPending: isRenaming } = useRenameChat();
+
+const { mutate: deleteChat, isPending: isDeleting } = useDeleteChat();
+```
+
 ## 🚀 Deployment
 
 ### Build Configuration
@@ -399,56 +417,8 @@ VITE_API_BASE_URL=https://api.valigate.com
 VITE_APP_ENV=production
 ```
 
-## 📝 Contributing
 
-### Development Workflow
 
-1. Create feature branch: `git checkout -b feature/chat-management`
-2. Make changes with proper TypeScript types
-3. Add tests for new functionality
-4. Update documentation as needed
-5. Submit pull request with description
 
-### Code Standards
 
-- Follow TypeScript strict mode
-- Use TailwindCSS for styling
-- Write self-documenting code
-- Add JSDoc comments for complex functions
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**EventSource connection fails**
-
-- Check CORS configuration on server
-- Verify API endpoint URL
-- Ensure proper authentication headers
-
-**React Query cache not updating**
-
-- Check query key consistency
-- Verify mutation success callbacks
-- Use React Query DevTools for debugging
-
-**TypeScript errors**
-
-- Ensure all types are properly imported
-- Check for circular dependencies
-- Verify strict mode configuration
-
-### Debug Tools
-
-- React Query DevTools
-- React Developer Tools
-- TanStack Router DevTools
-- Browser Network Tab for API calls
-
-## 📄 License
-
-MIT License - see LICENSE file for details.
-
----
-
-**Built with ❤️ for modern web development**

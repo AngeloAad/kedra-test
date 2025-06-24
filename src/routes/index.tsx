@@ -10,10 +10,11 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const createChatMutation = useCreateChat();
+
+  const { mutateAsync: createChat, isPending } = useCreateChat();
 
   const handleStartConversation = async () => {
-    if (!message.trim() || createChatMutation.isPending) return;
+    if (!message.trim() || isPending) return;
 
     const messageContent = message.trim();
     setMessage("");
@@ -25,7 +26,7 @@ function Index() {
           ? messageContent.substring(0, 50).trim() + "..."
           : messageContent;
 
-      const result = await createChatMutation.mutateAsync(chatName);
+      const result = await createChat(chatName);
 
       // Navigate to the new chat with the initial message
       navigate({
@@ -57,8 +58,8 @@ function Index() {
         setMessage={setMessage}
         onSendMessage={handleStartConversation}
         placeholder="What's in your mind?..."
-        disabled={createChatMutation.isPending}
-        isLoading={createChatMutation.isPending}
+        disabled={isPending}
+        isLoading={isPending}
       />
     </div>
   );
