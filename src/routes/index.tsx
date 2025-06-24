@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { useCreateChat } from "@/hooks/use-chats";
+import { useCreateChat } from "@/services/chats";
 import { ChatInput } from "@/components/ui/ChatInput";
 
 export const Route = createFileRoute("/")({

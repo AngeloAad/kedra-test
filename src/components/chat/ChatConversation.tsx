@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { useChatMessages, useStreamingMessage } from "@/hooks/use-messages";
+import { useChatMessages, useStreamingMessage } from "@/services/messages";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { ChatInput } from "@/components/ui/ChatInput";
 import { MessageContent } from "@/components/ui/MessageContent";
-import type { Message } from "@/types/api";
+import type { Message } from "@/services/messages";
 
 interface ChatConversationProps {
   chatId: string;

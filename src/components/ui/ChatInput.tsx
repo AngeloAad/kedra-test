@@ -20,7 +20,7 @@ export function ChatInput({
 }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-resize textarea (expand upward like ChatGPT)
+  // Auto-resize textarea "basically it expands so the user can write more"
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {

@@ -39,7 +39,7 @@ export function ChatLayout() {
           <div
             className="fixed inset-0 lg:hidden z-40"
             onClick={() => setIsSidebarOpen(false)}
-            style={{ left: "320px" }} // Start after sidebar width
+            style={{ left: "320px" }}
           />
         )}
 

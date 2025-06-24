@@ -1,9 +1,9 @@
 import { useParams, useNavigate } from "@tanstack/react-router";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useUserChats, useRenameChat, useDeleteChat } from "@/hooks/use-chats";
+import { useUserChats, useRenameChat, useDeleteChat } from "@/services/chats";
 import { ChatListItem } from "@/components/sidebar/ChatListItem";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
-import type { Chat } from "@/types/api";
+import type { Chat } from "@/services/chats";
 
 interface ChatSidebarProps {
   onCloseSidebar?: () => void;

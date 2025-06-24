@@ -1,11 +1,16 @@
-import { Link } from "@tanstack/react-router";
+// React and dependencies
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+
+// Icons
 import {
   EllipsisHorizontalIcon,
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import type { Chat } from "@/types/api";
+
+// Types and utilities
+import type { Chat } from "@/services/chats";
 import { cn } from "@/lib/utils";
 
 interface ChatListItemProps {
@@ -90,6 +95,7 @@ export function ChatListItem({
         )}
       </Link>
 
+      {/* Three dots menu button */}
       <button
         onClick={(e) => {
           e.preventDefault();
