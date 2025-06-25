@@ -1,4 +1,7 @@
+// External imports
 import { API_CONFIG, apiRequest } from "@/lib/api-config";
+
+// Type imports from local module
 import type {
   Chat,
   CreateChatRequest,

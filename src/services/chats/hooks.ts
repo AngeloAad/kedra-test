@@ -1,13 +1,20 @@
+// External dependencies
 import {
   useQuery,
   useMutation,
   useQueryClient,
   useInfiniteQuery,
 } from "@tanstack/react-query";
+
+// Local module imports
 import { chatsApi } from "./api";
 import { chatsKeys, chatsQueryOptions } from "./queryOptions";
 import { messagesKeys } from "../messages/queryOptions";
+
+// Type imports
 import type { UserChatsResponse, CreateChatResponse } from "./types";
+
+// Configuration imports
 import { API_CONFIG } from "@/lib/api-config";
 
 // Helper function to update chats cache for all pagination combinations

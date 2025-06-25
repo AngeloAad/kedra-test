@@ -1,6 +1,11 @@
+// External dependencies
 import { useState } from "react";
 import { Outlet } from "@tanstack/react-router";
+
+// Component imports
 import { Bars3Icon } from "@heroicons/react/24/outline";
+
+// Local module imports
 import { ChatSidebar } from "@/components/sidebar/ChatSidebar";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 

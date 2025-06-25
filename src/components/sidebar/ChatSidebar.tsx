@@ -1,9 +1,18 @@
+// External dependencies
 import { useParams, useNavigate } from "@tanstack/react-router";
+
+// Component imports
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
+// Local module imports
 import { useUserChats, useRenameChat, useDeleteChat } from "@/services/chats";
 import { ChatListItem } from "@/components/sidebar/ChatListItem";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+
+// Type imports from local module
 import type { Chat } from "@/services/chats";
+
+// Component imports
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 interface ChatSidebarProps {
   onCloseSidebar?: () => void;

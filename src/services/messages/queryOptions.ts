@@ -1,4 +1,7 @@
+// External dependencies
 import { queryOptions } from "@tanstack/react-query";
+
+// Local module imports
 import { messagesApi } from "./api";
 
 export const messagesKeys = {

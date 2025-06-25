@@ -1,8 +1,15 @@
+// External dependencies
 import { useState, useRef, useEffect, useMemo } from "react";
+
+// Local module imports
 import { useChatMessages, useStreamingMessage } from "@/services/messages";
+
+// Component imports
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { ChatInput } from "@/components/ui/ChatInput";
 import { MessageContent } from "@/components/ui/MessageContent";
+
+// Type imports from local module
 import type { Message } from "@/services/messages";
 
 interface ChatConversationProps {

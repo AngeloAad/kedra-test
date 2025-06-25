@@ -1,16 +1,18 @@
-// React and dependencies
+// External dependencies
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 
-// Icons
+// Component imports
 import {
   EllipsisHorizontalIcon,
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 
-// Types and utilities
+// Type imports from local module
 import type { Chat } from "@/services/chats";
+
+// Utility imports
 import { cn } from "@/lib/utils";
 
 interface ChatListItemProps {

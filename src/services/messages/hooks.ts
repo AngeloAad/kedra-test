@@ -1,7 +1,12 @@
+// External dependencies
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState, useCallback, useRef } from "react";
+
+// Local module imports
 import { streamingApi } from "./api";
 import { messagesKeys, messagesQueryOptions } from "./queryOptions";
+
+// Type imports from local module
 import type { Message, ChatMessagesResponse } from "./types";
 
 export function useChatMessages(chatId: string | null) {

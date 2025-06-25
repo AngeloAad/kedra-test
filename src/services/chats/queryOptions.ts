@@ -1,6 +1,10 @@
+// External dependencies
 import { queryOptions } from "@tanstack/react-query";
+
+// Local module imports
 import { chatsApi } from "./api";
 
+// Query key factory
 export const chatsKeys = {
   all: ["chats"] as const,
   user: (userId: string) => [...chatsKeys.all, "user", userId] as const,

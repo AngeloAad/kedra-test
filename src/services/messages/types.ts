@@ -1,4 +1,3 @@
-// Core Message entity
 export interface Message {
   id: string;
   chat_id: string;
@@ -8,14 +7,12 @@ export interface Message {
   updated_at: string;
 }
 
-// API Request/Response Types
 export interface SendMessageRequest {
   message: string;
   chat_id: string;
   user_id: string;
 }
 
-// Raw API message response structure
 export interface ApiMessageItem {
   user_message: string;
   bot_response: string;
