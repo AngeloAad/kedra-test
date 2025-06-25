@@ -4,7 +4,6 @@ import { streamingApi } from "./api";
 import { messagesKeys, messagesQueryOptions } from "./queryOptions";
 import type { Message, StreamMessage, ChatMessagesResponse } from "./types";
 
-// Hook for fetching chat messages
 export function useChatMessages(chatId: string | null) {
   return useQuery({
     ...messagesQueryOptions.chatMessages(chatId || ""),
@@ -12,7 +11,7 @@ export function useChatMessages(chatId: string | null) {
   });
 }
 
-// Simplified streaming hook with proper EventSource handling
+// Streaming hook with proper EventSource handling
 export function useStreamingMessage() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");

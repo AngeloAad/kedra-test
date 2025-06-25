@@ -5,11 +5,11 @@
 ### Parameters
 
 name: description:
-chat_id _ is a string ($uuid) (query) chat_id
-tenant_name _ is a string (query) tenant_name
-user_id \* is a string (query) user_id
-page_size integer (query) page_size
-page_number integer (query) page_number
+chat_id * is a string ($uuid) (query) chat_id
+tenant_name * is a string (query) tenant_name
+user_id * is a string (query) user_id
+page_size? integer (query) page_size
+page_number? integer (query) page_number
 
 ### Responses
 
