@@ -2,6 +2,8 @@
 
 A simple React TypeScript chat application that connects to a backend API for AI conversations.
 
+🌐 **[Live Demo](https://kedra-test.vercel.app)** | 📁 **[Source Code](https://github.com/AngeloAad/kedra-test)**
+
 ## What it is
 
 This is a basic chat interface where users can:
@@ -107,18 +109,47 @@ export const API_CONFIG = {
 };
 ```
 
-## Development
+## Getting Started
 
-```bash
-# Install dependencies
-npm install
+### Prerequisites
 
-# Start development server
-npm run dev
+- Node.js 18+
+- npm, yarn, or pnpm
 
-# Build for production
-npm run build
-```
+### Installation & Running
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/AngeloAad/kedra-test.git
+   cd kedra-test
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+   The app will be available at `http://localhost:5173`
+
+4. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+### Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Create production build
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint for code quality checks
 
 ## How Data Flows
 
