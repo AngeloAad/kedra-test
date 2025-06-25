@@ -28,13 +28,6 @@ export interface ChatMessagesResponse {
   messages: Message[];
 }
 
-// Streaming Types
-export interface StreamMessage {
-  type: "chunk" | "done" | "error";
-  content?: string;
-  error?: string;
-}
-
 // UI State Types
 export interface MessageState {
   isStreaming: boolean;
